@@ -1,0 +1,6 @@
+# minio 配置文件
+minio:
+    endpoint: http://127.0.0.1:9005
+    accessKey: admin
+    secretKey: 12345678
+    bucketName: mybucket
