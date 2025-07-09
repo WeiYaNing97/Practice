@@ -61,6 +61,12 @@
             <artifactId>practice-generator</artifactId>
         </dependency>
 
+        <!-- minio模块-->
+        <dependency>
+            <groupId>com.practice</groupId>
+            <artifactId>practice-minio</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

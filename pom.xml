@@ -217,6 +217,12 @@
                 <artifactId>practice-common</artifactId>
                 <version>${practice.version}</version>
             </dependency>
+            <!-- 通用工具-->
+            <dependency>
+                <groupId>com.practice</groupId>
+                <artifactId>practice-minio</artifactId>
+                <version>${practice.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -228,6 +234,7 @@
         <module>practice-quartz</module>
         <module>practice-generator</module>
         <module>practice-common</module>
+        <module>practice-minio</module>
     </modules>
     <packaging>pom</packaging>
 
