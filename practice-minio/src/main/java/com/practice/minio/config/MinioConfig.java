@@ -41,6 +41,11 @@ public class MinioConfig {
     @Value("${minio.bucketName}")
     private String bucketName;
 
+    /**
+     * 创建一个MinioClient对象
+     *
+     * @return 返回MinioClient对象
+     */
     @Bean
     public MinioClient minioClient() {
         MinioClient minioClient = MinioClient.builder().endpoint(endpoint).credentials(accessKey, secretKey).build();
