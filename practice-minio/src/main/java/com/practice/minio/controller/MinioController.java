@@ -1,8 +1,14 @@
 package com.practice.minio.controller;
 
+import com.practice.common.core.domain.AjaxResult;
+import com.practice.common.core.domain.model.LoginUser;
+import com.practice.common.utils.SecurityUtils;
 import com.practice.common.utils.StringUtils;
 import com.practice.minio.config.MinioConfig;
+import com.practice.minio.domain.PracticeMinio;
+import com.practice.minio.service.IPracticeMinioService;
 import com.practice.minio.utils.MinioUtils;
+import io.minio.ObjectWriteResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +27,7 @@ import java.io.InputStream;
  **/
 @Slf4j
 @RestController
-@RequestMapping("/oss")
+@RequestMapping("/minio/oss")
 public class MinioController {
 
     @Autowired
@@ -30,24 +36,36 @@ public class MinioController {
     @Autowired
     private MinioConfig minioConfig;
 
+    @Autowired
+    private IPracticeMinioService practiceMinioService;
+
     /**
      * 文件上传
      *
      * @param file
      */
     @PostMapping("/upload")
-    public String upload(@RequestParam("file") MultipartFile file) {
+    public AjaxResult upload(MultipartFile file, boolean updateSupport) {
         try {
             //文件名
             String fileName = file.getOriginalFilename();
-            String newFileName = System.currentTimeMillis() + "." + StringUtils.substringAfterLast(fileName, ".");
+            //String newFileName = System.currentTimeMillis() + "." + StringUtils.substringAfterLast(fileName, ".");
+
+            String newFileName = StringUtils.substringBeforeLast(fileName, ".")+System.currentTimeMillis() + "." + StringUtils.substringAfterLast(fileName, ".");
             //类型
             String contentType = file.getContentType();
             minioUtils.uploadFile(minioConfig.getBucketName(), file, newFileName, contentType);
-            return "上传成功,文件名：" + newFileName;
+
+
+            PracticeMinio practiceMinio = new PracticeMinio();
+            practiceMinio.setFileName(newFileName);
+            practiceMinio.setMinioPath(newFileName);
+            practiceMinio.setCreateBy(SecurityUtils.getUsername());
+            practiceMinioService.insertPracticeMinio(practiceMinio);
+            return AjaxResult.success("上传成功");
         } catch (Exception e) {
             e.printStackTrace();
-            return "上传失败";
+            return AjaxResult.error("上传失败");
         }
     }
 

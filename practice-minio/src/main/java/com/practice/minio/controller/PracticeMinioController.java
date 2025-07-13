@@ -2,6 +2,10 @@ package com.practice.minio.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.practice.common.utils.StringUtils;
+import com.practice.minio.config.MinioConfig;
+import com.practice.minio.utils.MinioUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +24,7 @@ import com.practice.minio.domain.PracticeMinio;
 import com.practice.minio.service.IPracticeMinioService;
 import com.practice.common.utils.poi.ExcelUtil;
 import com.practice.common.core.page.TableDataInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * minio信息存储路径Controller
@@ -32,7 +37,34 @@ import com.practice.common.core.page.TableDataInfo;
 public class PracticeMinioController extends BaseController
 {
     @Autowired
+    private MinioUtils minioUtils;
+
+    @Autowired
+    private MinioConfig minioConfig;
+    @Autowired
     private IPracticeMinioService practiceMinioService;
+
+
+    /**
+     * 文件上传
+     *
+     * @param file
+     */
+    @PostMapping("/upload")
+    public AjaxResult upload(MultipartFile file, boolean updateSupport) {
+        try {
+            //文件名
+            String fileName = file.getOriginalFilename();
+            String newFileName = System.currentTimeMillis() + "." + StringUtils.substringAfterLast(fileName, ".");
+            //类型
+            String contentType = file.getContentType();
+            minioUtils.uploadFile(minioConfig.getBucketName(), file, newFileName, contentType);
+            return AjaxResult.success("上传成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return AjaxResult.error("上传失败");
+        }
+    }
 
     /**
      * 查询minio信息存储路径列表
