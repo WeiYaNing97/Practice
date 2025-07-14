@@ -235,6 +235,7 @@
         <module>practice-generator</module>
         <module>practice-common</module>
         <module>practice-minio</module>
+        <module>practice-method</module>
     </modules>
     <packaging>pom</packaging>
 

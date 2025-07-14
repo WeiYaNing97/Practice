@@ -67,6 +67,13 @@
             <artifactId>practice-minio</artifactId>
         </dependency>
 
+        <!-- method模块-->
+        <dependency>
+            <groupId>com.practice</groupId>
+            <artifactId>practice-method</artifactId>
+            <version>3.9.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -1,15 +1,49 @@
 # 重点：
+启动minio
 
-### 启动minio
-```bash
-start cmd /k "d: && cd D:\Program Files\minio\bin && .\minio.exe server D:\Program Files\minio\data --console-address "127.0.0.1:9000" --address "127.0.0.1:9005""
+```
+.\minio.exe server D:\Program Files\minio\data --console-address "127.0.0.1:9000" --address "127.0.0.1:9005"
 ```
 
-### 启动MC
-```bash 
-start cmd /k "d: && cd D:\Program Files\minio\bin && mc alias set myminio http://localhost:9005 admin 12345678"
+启动mc
+
 ```
-### 修改桶的权限
+mc alias set myminio http://localhost:9000 YOUR_ACCESS_KEY YOUR_SECRET_KEY
+
+mc policy get myminio/my-bucket-name
+```
+
+查看当前已有的桶
+
+```
+mc ls myminio
+```
+
+创建一个新的桶
+
+```
+mc mb myminio/my-new-bucket
+```
+
+删除一个空桶如果桶是空的，可以直接删除：
+
+```
+mc rb myminio/my-new-bucket
+```
+
+查看桶的匿名访问权限
+
+```
+mc anonymous get myminio/my-new-bucket
+```
+
+设置桶为完全公开（慎用）
+
+```
+mc anonymous set public myminio/my-new-bucket
+```
+
+
 
 ### 根据API 和 WEB 来修改 配置文件信息
 ```bash
