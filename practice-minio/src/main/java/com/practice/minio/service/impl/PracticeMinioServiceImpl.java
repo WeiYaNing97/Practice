@@ -1,6 +1,9 @@
 package com.practice.minio.service.impl;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.practice.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +18,7 @@ import com.practice.minio.service.IPracticeMinioService;
  * @date 2025-07-09
  */
 @Service
-public class PracticeMinioServiceImpl implements IPracticeMinioService 
+public class PracticeMinioServiceImpl extends ServiceImpl<PracticeMinioMapper,PracticeMinio> implements IPracticeMinioService
 {
     @Autowired
     private PracticeMinioMapper practiceMinioMapper;
@@ -29,7 +32,10 @@ public class PracticeMinioServiceImpl implements IPracticeMinioService
     @Override
     public PracticeMinio selectPracticeMinioById(Long id)
     {
-        return practiceMinioMapper.selectPracticeMinioById(id);
+        LambdaQueryWrapper<PracticeMinio> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(PracticeMinio::getId, id);
+        PracticeMinio practiceMinio = practiceMinioMapper.selectList(queryWrapper).stream().findFirst().orElse(null);
+        return practiceMinio;
     }
 
     /**

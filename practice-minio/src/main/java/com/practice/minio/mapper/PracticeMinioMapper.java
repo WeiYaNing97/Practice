@@ -1,6 +1,8 @@
 package com.practice.minio.mapper;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.practice.minio.domain.PracticeMinio;
 
 /**
@@ -9,7 +11,7 @@ import com.practice.minio.domain.PracticeMinio;
  * @author wyn
  * @date 2025-07-09
  */
-public interface PracticeMinioMapper 
+public interface PracticeMinioMapper extends BaseMapper<PracticeMinio>
 {
     /**
      * 查询minio信息存储路径

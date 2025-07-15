@@ -1,9 +1,15 @@
 package com.practice.minio.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.practice.common.annotation.Excel;
 import com.practice.common.core.domain.BaseEntity;
+
+import java.util.Map;
 
 /**
  * minio信息存储路径对象 practice_minio
@@ -11,6 +17,8 @@ import com.practice.common.core.domain.BaseEntity;
  * @author wyn
  * @date 2025-07-09
  */
+@Data
+@TableName("practice_minio")
 public class PracticeMinio extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -26,47 +34,13 @@ public class PracticeMinio extends BaseEntity
     @Excel(name = "minio路径")
     private String minioPath;
 
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
 
-    public Long getId() 
-    {
-        return id;
-    }
 
-    public void setFileName(String fileName) 
-    {
-        this.fileName = fileName;
-    }
 
-    public String getFileName() 
-    {
-        return fileName;
-    }
-
-    public void setMinioPath(String minioPath) 
-    {
-        this.minioPath = minioPath;
-    }
-
-    public String getMinioPath() 
-    {
-        return minioPath;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("fileName", getFileName())
-            .append("minioPath", getMinioPath())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
-            .append("remark", getRemark())
-            .toString();
-    }
+    @TableField(exist = false)
+    private String searchValue;
+    /** 请求参数 */
+    @TableField(exist = false)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private Map<String, Object> params;
 }

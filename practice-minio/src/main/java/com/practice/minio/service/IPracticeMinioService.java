@@ -1,6 +1,8 @@
 package com.practice.minio.service;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.practice.minio.domain.PracticeMinio;
 
 /**
@@ -9,7 +11,7 @@ import com.practice.minio.domain.PracticeMinio;
  * @author wyn
  * @date 2025-07-09
  */
-public interface IPracticeMinioService 
+public interface IPracticeMinioService extends IService<PracticeMinio>
 {
     /**
      * 查询minio信息存储路径
